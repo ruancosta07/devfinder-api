@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// * Type de experiências que o usuário pode adicionar ao seu perfil.
+type Experience {
+  title       String
+  company     String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+}
+
+// * Model de projetos dos usuários
+model Projects {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  stack       String[]
+  images      String[]
+  repository  String?
+  link        String
+  createdAt   DateTime @default(now())
+  userId      String   @db.ObjectId
+  users       Users?   @relation(fields: [userId], references: [id])
+}
+
+// * Model de usuários do banco de dados
+model Users {
+  id                    String          @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String
+  email                 String          @unique
+  password              String
+  avatar                String?
+  skills                String[]
+  stack                 String[]
+  resume                String?
+  projects              Projects[]
+  role                  String
+  applyed               Opportunities[]
+  twoStepsAuth          Boolean?
+  twoStepsCode          String?
+  twoStepsCodeExpiresAt Int?
+
+  @@map("users")
+}
+
+model Opportunities {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  salary      String
+  mode        String
+  type        String
+  remote      String
+  stack       String[]
+  benefits    String[]
+  skills      String[]
+  userId      String   @db.ObjectId
+  users       Users?   @relation(fields: [userId], references: [id])
+  recruiterId String   @db.ObjectId
+
+  @@map("opportunities")
+}
