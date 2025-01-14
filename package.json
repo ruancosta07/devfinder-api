@@ -1,6 +1,5 @@
 {
   "name": "devfinder-api",
-  "module": "src/server.ts",
   "type": "module",
   "scripts": {
     "dev": "bun run --watch src/server.ts ",
