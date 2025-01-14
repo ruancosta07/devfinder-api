@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import prisma from "../utils/prisma";
+import prisma from "../utils/prisma.ts";
 const jwtKey = process.env.JWT_KEY as string;
 
 type Token = {

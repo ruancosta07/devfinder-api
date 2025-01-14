@@ -7,8 +7,8 @@ import {
   login,
   uploadProject,
   verifyToken
-} from "../controllers/User";
-import upload from "../utils/multer";
+} from "../controllers/User.ts";
+import upload from "../utils/multer.ts";
 import { authMiddleware } from "../middlewares/authMiddleware.ts";
 const userRoutes = Router()
 
