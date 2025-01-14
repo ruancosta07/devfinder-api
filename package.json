@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --watch src/server.ts ",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
