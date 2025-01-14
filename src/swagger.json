@@ -1,0 +1,318 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "0.0.1",
+    "title": "API DevFinder",
+    "description": "API Rest do projeto DevFinder, uma plataforma de contratação e busca de empregos exclusivamente para desenvolvedores, onde desenvolvedores podem buscar empregos e recrutadores podem postar vagas e recrutar os devs.",
+    "contact": {
+      "name": "Ruan Costa",
+      "email": "ruancosta.ti0805@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor local"
+    },
+    {
+      "url": "https://api-devfinder.vercel.app",
+      "description": "Servidor de produção"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/criar-conta": {
+      "post": {
+        "summary": "Cria uma nova conta de usuário",
+        "description": "Esta rota realiza o cadastro de novos usuários no banco de dados.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "email@example.com",
+                    "description": "Um e-mail válido para o cadastro."
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "SenhaSegura123!",
+                    "description": "Uma senha forte para o usuário."
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe",
+                    "description": "O nome completo do usuário."
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "Candidato",
+                    "description": "O tipo de usuário da aplicação"
+                  }
+                },
+                "required": ["email", "password", "name", "role"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Conta criada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Conta criada com sucesso"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "123e4567-e89b-12d3-a456-426614174000",
+                          "description": "ID único do usuário."
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "email@example.com",
+                          "description": "O e-mail cadastrado."
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe",
+                          "description": "O nome do usuário."
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na validação dos dados.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Campo inválido",
+                      "description": "Mensagem de erro detalhada."
+                    },
+                    "field": {
+                      "type": "string",
+                      "example": "name",
+                      "descripton": "O campo que não aprovado pela validação"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email já cadastrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email já cadastrado",
+                      "description": "Mensagem de erro detalhada."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Realiza o login de um usuário",
+        "description": "Essa rota realiza o login de usuários cadastrados na aplicação",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "email@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "SenhaSegura123!"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso quando o usuário não possui verificação em duas etapas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Login realizado com sucesso"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "123e4567-e89b-12d3-a456-426614174000",
+                          "description": "ID único do usuário."
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "email@example.com",
+                          "description": "O e-mail cadastrado."
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe",
+                          "description": "O nome do usuário."
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    },
+                    "twoStepsAuth": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Retorna true ou false dependendo se o usuário possui a verificação em duas etapas "
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Envia um código de verificação única para o email do usuário quando o usuário possui verificação em duas etapas ativada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email enviado com sucesso"
+                    },
+                    "twoStepsAuth": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Retorna true sobre o código de verificação de duas etapas do usuário, para que o front-end possa saber que o usuário tem verificação de duas etapas."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Retorna um erro genérico quando o email ou senha do usuário estão incorretos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email ou senha incorretos"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/confirmar-codigo": {
+      "post": {
+        "summary": "Confirma o código enviado pelo usuário para o email",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "3GT6NW",
+                    "description": "O código único enviado para o usuário pelo email"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "email@example.com",
+                    "description": "O email do usuário"
+                  }
+                },
+                "required": ["code", "email"]
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": ""
+        }
+      }
+    },
+    "/verificar-token": {
+      "post": {
+        "description": "Rota de verificação para ver se o usuário está logado através do envio de um token pelos headers",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token válido. Usuário autenticado."
+          },
+          "401": {
+            "description": "Token inválido ou ausente."
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "Authorization": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "value": "Bearer <JWT token here>"
+        }
+      }
+    }
+  }
+}
