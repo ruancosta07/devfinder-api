@@ -1,5 +1,5 @@
 import express from "express";
-import userRoutes from "./routes/user.ts";
+import userRoutes from "./routes/user";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger.json"
 const app = express();

@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { z } from "zod";
-import prisma from "../utils/prisma.ts";
-import nodemailer from "../utils/nodemailer.ts";
-import emailToSend from "../utils/email.ts";
-import supabase from "../utils/supabase.ts";
+import prisma from "../utils/prisma";
+import nodemailer from "../utils/nodemailer";
+import emailToSend from "../utils/email";
+import supabase from "../utils/supabase";
 import { v7 as uuid } from "uuid";
 
 const jwtKey = process.env.JWT_KEY as string;

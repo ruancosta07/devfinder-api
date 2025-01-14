@@ -7,9 +7,9 @@ import {
   login,
   uploadProject,
   verifyToken
-} from "../controllers/User.ts";
-import upload from "../utils/multer.ts";
-import { authMiddleware } from "../middlewares/authMiddleware.ts";
+} from "../controllers/User";
+import upload from "../utils/multer";
+import { authMiddleware } from "../middlewares/authMiddleware";
 const userRoutes = Router()
 
 userRoutes.post("/criar-conta", createUser)

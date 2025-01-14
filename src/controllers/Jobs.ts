@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import prisma from "../utils/prisma.ts";
+import prisma from "../utils/prisma";
 import { z } from "zod";
 
 const applyToJob = async (req: Request, res: Response) => {
